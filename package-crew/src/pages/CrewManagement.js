@@ -41,8 +41,8 @@ const CrewManagement = () => {
       </div>
 
       <table className="table table-zebra">
-        <thead className="bg-[#F4F4F4] text-black text-xl text-center">
-          <tr>
+        <thead className="text-center text-gray-400">
+          <tr className="bg-base-200 text-base">
             <th>크루 아이디</th>
             <th>크루 URL</th>
             <th>메모</th>
@@ -50,7 +50,7 @@ const CrewManagement = () => {
             <th>작업 내용</th>
           </tr>
         </thead>
-        <tbody className="text-center text-black font-medium text-xl">
+        <tbody className="text-center text-black text-base">
           {Array(1)
             .fill(0)
             .slice(10 * index, 10 * index + 10)

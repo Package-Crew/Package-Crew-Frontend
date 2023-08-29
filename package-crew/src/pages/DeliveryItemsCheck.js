@@ -10,15 +10,15 @@ const DeliveryItemsCheck = () => {
     <div className="pt-10">
       <div className="overflow-x-auto text-center">
         <table className="table h-[572px]">
-          <thead className="bg-[#F4F4F4] text-black text-xl text-center">
-            <tr>
+          <thead className="text-center text-gray-400">
+            <tr className="bg-base-200 text-base">
               <th>송장 번호</th>
               <th>상품 번호</th>
               <th>작업자</th>
               <th>작업 상황</th>
             </tr>
           </thead>
-          <tbody className="text-center text-black font-bold text-xl">
+          <tbody className="text-center text-black text-base">
             {Array(20)
               .fill(0)
               .slice(10 * index, 10 * index + 10)

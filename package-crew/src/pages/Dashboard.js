@@ -93,15 +93,15 @@ const Dashboard = () => {
         <div className="flex-1 space-y-4">
           <ExtraText>최근 작업된 물품 상황</ExtraText>
           <div>
-            <table className="table table-lg ">
-              <thead className="bg-[#F4F4F4] text-lg text-black text-center">
-                <tr>
+            <table className="table  ">
+              <thead className="  text-center text-gray-400">
+                <tr className=" bg-base-200 text-base">
                   <th>송장 번호</th>
                   <th>상품 번호</th>
                   <th>작업 상황</th>
                 </tr>
               </thead>
-              <tbody className="text-center text-black font-bold ">
+              <tbody className="text-center text-black  ">
                 {Array(7)
                   .fill(0)
                   .map((n, i) => (
