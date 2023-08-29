@@ -5,9 +5,10 @@ import tw from "tailwind-styled-components";
 import { cls } from "../libs/utils";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
+import Header from "../components/header";
 
 const rowVariants = {
   hidden: (back) => ({
@@ -54,6 +55,7 @@ const Home = () => {
 
   return (
     <div className="text-base pb-10 h-screen w-full mx-auto lg:w-[1024px]">
+      <Header />
       <div className="space-y-2 flex flex-col justify-center items-center">
         <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
           <div className="bg-gray-300 w-full h-80 rounded-2xl"></div>
@@ -120,7 +122,10 @@ const Home = () => {
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                   .slice(5 * worksIndex, 5 * worksIndex + 5)
                   .map((i) => (
-                    <div className="flex justify-between p-3 bg-[#F8F8F8]">
+                    <Link
+                      to={`/detail/id/dashboard`}
+                      className="flex justify-between p-3 bg-[#F8F8F8]"
+                    >
                       <div className="flex flex-col ">
                         <span className="font-bold">
                           블랙 프라이데이 현재 업무 {i}
@@ -135,7 +140,7 @@ const Home = () => {
                           5명
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
               </div>
 
