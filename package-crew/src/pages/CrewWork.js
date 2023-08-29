@@ -181,7 +181,7 @@ function CrewWork() {
                                             <input
                                                 type="checkbox"
                                                 checked={checkedItems[index]}
-                                                className="checkbox checkbox-primary"
+                                                className="checkbox checkbox-info"
                                                 onChange={() =>
                                                     handleCheckboxChange(index)
                                                 } // 체크박스 변경 핸들러
