@@ -89,12 +89,12 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-7">
-        <div className="col-start-1 col-end-3 space-y-4">
+      <div className="flex space-x-7">
+        <div className="flex-1 space-y-4">
           <ExtraText>최근 작업된 물품 상황</ExtraText>
           <div>
             <table className="table table-lg ">
-              <thead className="bg-[#F4F4F4] text-black text-center">
+              <thead className="bg-[#F4F4F4] text-lg text-black text-center">
                 <tr>
                   <th>송장 번호</th>
                   <th>상품 번호</th>
@@ -115,10 +115,10 @@ const Dashboard = () => {
             </table>
           </div>
         </div>
-        <div className="col-start-3 col-end-4 space-y-4">
+        <div className="space-y-4">
           <ExtraText>전체 진행률</ExtraText>
-          <div className="bg-[#37CDBE] p-8 pb-16 rounded-md relative">
-            <div className="bg-white rounded-full p-5">
+          <div className="bg-[#37CDBE] pt-5 pb-20 px-16 rounded-md relative flex justify-center">
+            <div className="bg-white rounded-full w-64 h-64 p-4">
               <PieChart
                 data={[
                   { title: "One", value: 100, color: "#37CDBE" },
@@ -128,10 +128,10 @@ const Dashboard = () => {
                 startAngle={270}
                 animate
               />
-              <div className="font-bold absolute top-48 left-40 text-6xl text-[#37CDBE]">
+              <div className="font-bold absolute top-32 left-32 text-6xl text-[#37CDBE]">
                 10%
               </div>
-              <div className="font-bold absolute bottom-3 text-3xl left-36 text-white">
+              <div className="font-bold text-3xl absolute bottom-6 left-[124px] text-white">
                 100/1000
               </div>
             </div>
