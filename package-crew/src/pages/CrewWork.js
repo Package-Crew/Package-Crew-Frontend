@@ -62,6 +62,10 @@ function CrewWork() {
         navigate("/crewTotalProcess");
     };
 
+    const goToCrewComplete = () => {
+        navigate("/crewComplete");
+    };
+
     useEffect(() => {
         // QR 코드 스캔 결과 값이 생기면 녹화 시작
         if (decodedValue) {
@@ -188,7 +192,7 @@ function CrewWork() {
                                         <td>
                                             <label
                                                 htmlFor="my_modal_6"
-                                                className="btn flex justify-center"
+                                                className="btn flex justify-center min-w-max"
                                                 onClick={() => {
                                                     setSelectedItemId(item.id);
                                                 }}
@@ -305,7 +309,12 @@ function CrewWork() {
                             전체 진행 상황 조회
                         </button>
                     </div>
-                    <button className="btn w-48 mx-auto mt-auto bg-mainColor border-none text-white">
+                    <button
+                        className="btn w-48 mx-auto mt-auto bg-mainColor border-none text-white"
+                        onClick={() => {
+                            goToCrewComplete();
+                        }}
+                    >
                         업무 종료
                     </button>
                     {recording && (
