@@ -44,10 +44,6 @@ export const Scanner = (props) => {
     const getCameras = () => {
         Html5Qrcode.getCameras()
             .then((devices) => {
-                /**
-                 * devices would be an array of objects of type:
-                 * { id: "id", label: "label" }
-                 */
                 console.info(devices);
                 if (devices && devices.length) {
                     setCameraList(devices);
@@ -84,26 +80,44 @@ export const Scanner = (props) => {
 
     return (
         <div style={{ position: "relative" }}>
-            <div id="reader" width="100%"></div>
-            <button onClick={getCameras}>Get List of cameras</button>
-            {cameraList.length > 0 && (
-                <select onChange={onCameraChange}>
-                    {cameraList.map((li) => (
-                        <option
-                            key={li.id}
-                            id={li.id}
-                            selected={activeCamera && activeCamera.id === li.id}
-                        >
-                            {li.label}
-                        </option>
-                    ))}
-                    <option>Dummy</option>
-                </select>
-            )}
-            <button onClick={() => handleClickAdvanced()}>
-                click pro {props.type}
-            </button>
-            <button onClick={() => handleStop()}>stop pro</button>
+            <div id="reader" width="600px"></div>
+            <div className=" text-2xl flex justify-center">
+                QR 코드를 스캔해주세요.
+            </div>
+            {/* 카메라 설정 */}
+            <div className=" mt-20">
+                <button className="btn" onClick={getCameras}>
+                    Get List of cameras
+                </button>
+                {cameraList.length > 0 && (
+                    <select
+                        className="select select-bordered w-full max-w-xs mt-3"
+                        onChange={onCameraChange}
+                    >
+                        {cameraList.map((li) => (
+                            <option
+                                key={li.id}
+                                id={li.id}
+                                selected={
+                                    activeCamera && activeCamera.id === li.id
+                                }
+                            >
+                                {li.label}
+                            </option>
+                        ))}
+                        <option>Dummy</option>
+                    </select>
+                )}
+                <button
+                    className="hidden"
+                    onClick={() => handleClickAdvanced()}
+                >
+                    click pro {props.type}
+                </button>
+                <button className="hidden" onClick={() => handleStop()}>
+                    stop pro
+                </button>
+            </div>
         </div>
     );
 };
