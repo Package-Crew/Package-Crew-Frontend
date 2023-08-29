@@ -53,7 +53,7 @@ const Home = () => {
   };
 
   return (
-    <div className="text-base pb-10 mx-auto">
+    <div className="text-base pb-10 h-screen w-full mx-auto lg:w-[1024px]">
       <div className="space-y-2 flex flex-col justify-center items-center">
         <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
           <div className="bg-gray-300 w-full h-80 rounded-2xl"></div>

@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between py-5 px-3  text-base font-bold">
       <div className="flex justify-around items-center space-x-10">
-        <Link>
+        <Link to="/">
           <img src="/img/Logo.svg" className="h-7" />
         </Link>
         <Link>업무</Link>
