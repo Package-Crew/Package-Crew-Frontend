@@ -310,7 +310,7 @@ function CrewWork() {
                         </button>
                     </div>
                     <button
-                        className="btn w-48 mx-auto mt-auto bg-mainColor border-none text-white"
+                        className="btn w-48 mb-7 mx-auto mt-auto bg-mainColor border-none text-white"
                         onClick={() => {
                             goToCrewComplete();
                         }}

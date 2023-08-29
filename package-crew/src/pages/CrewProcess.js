@@ -6,14 +6,14 @@ import axios from "axios";
 function CrewProcess() {
     const navigate = useNavigate();
 
-    const [trackingNum, setTrackingNum] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [workName, setWorkName] = useState("블랙 프라이데이 컨버스 아울렛");
+    const [startDate, setStartDate] = useState("2023-08-29");
+    const [endDate, setEndDate] = useState("2023-09-01");
     const [deliveryResponseDtos, setDeliveryResponseDtos] =
         useState(exampleData);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 7;
+    const itemsPerPage = 10;
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -55,7 +55,7 @@ function CrewProcess() {
     //     axios
     //         .get(`URL/dangdol/qrscan?trackingNum=1`)
     //         .then((res) => {
-    //             setTrackingNum(res.data.trackingNum);
+    //             setWorkName(res.data.workName);
     //             setStartDate(res.data.startDate);
     //             setEndDate(res.data.endDate);
     //             setDeliveryResponseDtos(res.data.deliveryResponseDtos);
@@ -112,7 +112,7 @@ function CrewProcess() {
                     </button>
                 </div>
                 <button
-                    className="btn w-48 mx-auto mt-auto bg-mainColor border-none text-white"
+                    className="btn w-48 mx-auto mt-auto mb-7 bg-mainColor border-none text-white"
                     onClick={() => {
                         goToCrewComplete();
                     }}
@@ -125,10 +125,10 @@ function CrewProcess() {
                 {/* 타이틀 */}
                 <div className="h-1/6">
                     <div className=" text-3xl font-extrabold mr-auto pl-24 mt-10">
-                        업무 이름
+                        {workName}
                     </div>
                     <div className=" text-lg text-gray-400 mr-auto pl-24 mt-3">
-                        날짜
+                        {startDate} ~ {endDate}
                     </div>
                 </div>
                 {/* 테이블 */}
