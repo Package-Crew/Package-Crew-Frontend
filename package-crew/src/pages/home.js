@@ -206,28 +206,33 @@ const Home = () => {
         </div>
       </div>
       {isClickNew ? (
-        <div className="relative">
+        <div className="flex justify-center">
           <div
             className="fixed top-0 right-0 w-screen h-screen bg-black opacity-20"
             onClick={() => setIsClickNew(false)}
           />
-          <div className="fixed top-40  bg-white rounded-xl p-5 w-2/3">
+          <div className="fixed top-40  bg-white rounded-xl p-5 w-1/3">
             <div className="flex justify-between items-center">
               <span className="text-[25px] font-bold">업무 설정</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
+              <div
+                className="hover:bg-gray-300 transition-all rounded-full p-2"
+                onClick={() => setIsClickNew(false)}
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6 cursor-pointer"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
             </div>
             <form onSubmit={handleSubmit(onValid)} className="py-4 pl-1">
               <div className="h-32 flex flex-col space-y-2">
