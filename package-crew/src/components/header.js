@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="flex justify-between py-5 px-3  text-base font-bold">
-      <div className="flex justify-around space-x-10">
-        <Link>패키지 크루 로고</Link>
+    <div className="flex items-center justify-between py-5 px-3  text-base font-bold">
+      <div className="flex justify-around items-center space-x-10">
+        <Link to="/">
+          <img src="/img/Logo.svg" className="h-7" />
+        </Link>
         <Link>업무</Link>
         <Link>상품등록</Link>
       </div>
-      <div className="">당돌컴퍼니</div>
+      <div className="flex items-center space-x-1">
+        <img src="/img/company.svg" />
+        <span className="pt-1">당돌컴퍼니</span>
+      </div>
     </div>
   );
 };
