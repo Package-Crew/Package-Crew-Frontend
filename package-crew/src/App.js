@@ -7,9 +7,8 @@ import RegiDelivery from "./pages/RegiDelivery";
 import Dashboard from "./pages/Dashboard";
 
 import CrewWork from "./pages/CrewWork";
-
-
-
+import DeliveryItemsCheck from "./pages/DeliveryItemsCheck";
+import WorkDetail from "./pages/WorkDetail";
 
 function App() {
   return (
@@ -17,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/crewWork" element={<CrewWork />} />
-        <Route path="/registerDeliveryItem/id" element={<RegiDelivery />} />
-        <Route path="/detail/id/dashboard" element={<Dashboard />} />
+        <Route path="/registerDeliveryItem/:id" element={<RegiDelivery />} />
+        <Route path="/detail/:id/*" element={<WorkDetail />} />
       </Routes>
     </div>
   );
