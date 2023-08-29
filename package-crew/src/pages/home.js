@@ -144,7 +144,7 @@ const Home = () => {
                   ))}
               </div>
 
-              <div className="space-x-2 flex justify-center">
+              <div className="space-x-2 flex justify-center py-3">
                 {[0, 1].map((i) => (
                   <span
                     onClick={() => {
@@ -184,8 +184,8 @@ const Home = () => {
                     </div>
                   ))}
               </div>
-              <div>
-                <div className="space-x-2 flex justify-center">
+              <div className="">
+                <div className="space-x-2 flex justify-center py-3">
                   {[0, 1].map((i) => (
                     <span
                       onClick={() => {
