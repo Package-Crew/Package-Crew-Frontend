@@ -123,7 +123,7 @@ const Home = () => {
                   .slice(5 * worksIndex, 5 * worksIndex + 5)
                   .map((i) => (
                     <Link
-                      to={`/detail/id/dashboard`}
+                      to={`/detail/${i}/dashboard`}
                       className="flex justify-between p-3 bg-[#F8F8F8]"
                     >
                       <div className="flex flex-col ">
@@ -211,7 +211,7 @@ const Home = () => {
             className="fixed top-0 right-0 w-screen h-screen bg-black opacity-20"
             onClick={() => setIsClickNew(false)}
           />
-          <div className="fixed top-40 left-32 bg-white rounded-xl p-5 w-2/3">
+          <div className="fixed top-40  bg-white rounded-xl p-5 w-2/3">
             <div className="flex justify-between items-center">
               <span className="text-[25px] font-bold">업무 설정</span>
               <svg
