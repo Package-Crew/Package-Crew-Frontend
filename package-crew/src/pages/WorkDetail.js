@@ -3,6 +3,7 @@ import SideBar from "../components/SideBar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import DeliveryItemsCheck from "./DeliveryItemsCheck";
+import CrewManagement from "./CrewManagement";
 
 const WorkDetail = () => {
   return (
@@ -17,6 +18,7 @@ const WorkDetail = () => {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/deliveryItemsCheck" element={<DeliveryItemsCheck />} />
+          <Route path="/crewManagement" element={<CrewManagement />} />
         </Routes>
       </div>
     </div>
