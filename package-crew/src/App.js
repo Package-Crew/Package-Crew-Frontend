@@ -3,6 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import Header from "./components/header";
 import RegiDelivery from "./pages/RegiDelivery";
+import CrewWork from "./pages/CrewWork";
+
+
+
 
 function App() {
   return (
@@ -10,6 +14,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/crewWork" element={<CrewWork />} />
         <Route path="/registerDeliveryItem/id" element={<RegiDelivery />} />
       </Routes>
     </div>
