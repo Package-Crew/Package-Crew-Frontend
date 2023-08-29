@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
-import CrewWork from "./pages/CrewWork";
+
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <RecoilRoot>
-        <CrewWork />
-    </RecoilRoot>
+  <RecoilRoot>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </RecoilRoot>
 );
 
 // If you want to start measuring performance in your app, pass a function
