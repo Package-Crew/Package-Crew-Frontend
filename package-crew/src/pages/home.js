@@ -217,7 +217,7 @@ const Home = () => {
                       <div className="flex items-center space-x-3">
                         <span className="font-bold">
                           총 {work.total}개 품목 중 {work.clear}개 완료(
-                          {parseInt(work.avg) * 100}%)
+                          {work.avg}%)
                         </span>
                         <div className="border-mainColor p-4 rounded-xl border text-mainColor font-bold">
                           {work.workers}명

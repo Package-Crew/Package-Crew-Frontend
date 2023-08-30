@@ -9,6 +9,8 @@ const DeliveryItemsCheck = () => {
   const [index, setIndex] = useState(0);
   const [isClickWork, setIsClickWork] = useState(false);
   const [isClickId, setIsClickId] = useState();
+  const [trackingNum, setTrackingNum] = useState();
+  const [videoUrl, setVideoUrl] = useState();
 
   const [workId, setWorkId] = useRecoilState(workIdState);
 
@@ -43,6 +45,20 @@ const DeliveryItemsCheck = () => {
         setDeliveryList(res.data.deliveryList);
       });
   }, []);
+
+  useEffect(() => {
+    if (isClickWork) {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/dangdol/video?trackingNum=${trackingNum}`
+        )
+        .then((res) => {
+          console.log(res);
+          setVideoUrl(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isClickWork]);
   return (
     <div className="pt-10">
       <div className="overflow-x-auto text-center h-[572px]">
@@ -63,6 +79,7 @@ const DeliveryItemsCheck = () => {
                 onClick={() => {
                   setIsClickWork(true);
                   setIsClickId(i);
+                  setTrackingNum(d.trackingNum);
                 }}
               >
                 <td>{d.trackingNum}</td>
@@ -125,7 +142,7 @@ const DeliveryItemsCheck = () => {
                 </svg>
               </div>
             </div>
-            <div className="h-80 w-full bg-gray-300" />
+            <video src={videoUrl} className="h-80 w-full " />
           </div>
         </div>
       ) : null}
