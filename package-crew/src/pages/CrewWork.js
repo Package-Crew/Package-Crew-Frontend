@@ -73,23 +73,25 @@ function CrewWork() {
             // 서버에 query string 으로 decodedValue 전송
             // 상품 목록 받아오기
             // decodedValue 예시 값 1
-            // axios
-            //     .get(`URL/dangdol/qrscan?trackingNum=1`)
-            //     .then((res) => {
-            //         setTrackingNum(res.data.trackingNum);
-            //         setItemList(res.data.itemList);
+            axios
+                .get(
+                    `${process.env.REACT_APP_BASE_URL}/dangdol/qrscan?trackingNum=1234`
+                )
+                .then((res) => {
+                    setTrackingNum(res.data.trackingNum);
+                    setItemList(res.data.itemList);
 
-            //         console.log(trackingNum);
-            //         const itemList = res.data.itemList;
-            //         itemList.forEach((item) => {
-            //             console.log(item.id);
-            //             console.log(item.imageUrl);
-            //             console.log(item.itemName);
-            //         });
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //     });
+                    console.log(trackingNum);
+                    const itemList = res.data.itemList;
+                    itemList.forEach((item) => {
+                        console.log(item.id);
+                        console.log(item.imageUrl);
+                        console.log(item.itemName);
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     }, [decodedValue]);
 
@@ -113,11 +115,11 @@ function CrewWork() {
 
         try {
             // axios를 사용하여 서버로 녹화된 비디오 전송
-            // await axios.post(
-            //     // 1은 workerId
-            //     `URL/dangdol/packaging/${trackingNum}/1`,
-            //     formData
-            // );
+            await axios.post(
+                // 6은 workerId
+                `${process.env.REACT_APP_BASE_URL}/dangdol/packaging/${trackingNum}/6`,
+                formData
+            );
             console.log("녹화된 비디오가 서버로 전송되었습니다.");
             setDecodedValue("");
             setCheckedItems(itemList.map(() => false));
@@ -214,13 +216,14 @@ function CrewWork() {
                             className={`complete-btn btn btn-wide border-none ${
                                 checkedItems.every((isChecked) => isChecked)
                                     ? "bg-mainColor text-white"
-                                    : "bg-gray-300 text-white"
+                                    : "bg-gray-300 text-white btn-disabled"
                             }`}
                             onClick={() => handleRecordingStop()}
                         >
                             패키징 완료
                         </button>
                     </div>
+                    {/* 사진 모달창 */}
                     {selectedItemId !== null && (
                         <>
                             <input
@@ -247,15 +250,20 @@ function CrewWork() {
                                             )?.id
                                         }
                                     </p>
-                                    <img
-                                        src={
-                                            itemList.find(
-                                                (item) =>
-                                                    item.id === selectedItemId
-                                            )?.imageUrl
-                                        }
-                                        alt="상품 사진"
-                                    />
+                                    <div className="flex justify-center">
+                                        <img
+                                            className=" h-96"
+                                            src={
+                                                itemList.find(
+                                                    (item) =>
+                                                        item.id ===
+                                                        selectedItemId
+                                                )?.imageUrl
+                                            }
+                                            alt="상품 사진"
+                                        />
+                                    </div>
+
                                     <div className="modal-action">
                                         <label
                                             htmlFor="my_modal_6"
