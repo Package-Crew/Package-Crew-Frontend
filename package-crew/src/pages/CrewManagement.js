@@ -27,6 +27,7 @@ const CrewManagement = () => {
     },
   ]);
 
+  const [workerNums, setWorkersNums] = useState([]);
   const { register, handleSubmit, reset } = useForm();
 
   const onValid = (data) => {
@@ -67,6 +68,7 @@ const CrewManagement = () => {
         )
         .then((res) => {
           console.log(res);
+          setWorkersNums(res.data);
         })
         .catch((err) => console.log(err));
     }
@@ -156,8 +158,8 @@ const CrewManagement = () => {
                 </svg>
               </div>
             </div>
-            <div className="overflow-x-auto text-center">
-              <table className="table h-[572px]">
+            <div className="overflow-x-auto text-center h-[572px]">
+              <table className="table ">
                 <thead className="bg-[#F4F4F4] text-black text-xl text-center">
                   <tr>
                     <th>송장 번호</th>
@@ -165,15 +167,16 @@ const CrewManagement = () => {
                     <th>작업 상황</th>
                   </tr>
                 </thead>
-                <tbody className="text-center text-black font-bold text-xl">
-                  {Array(20)
-                    .fill(0)
+                <tbody className="text-center text-black  text-xl">
+                  {workerNums
                     .slice(10 * crewIndex, 10 * crewIndex + 10)
-                    .map((n, i) => (
+                    .map((w, i) => (
                       <tr>
-                        <td>344156485874</td>
-                        <td>344156485874</td>
-                        <td className="font-normal">진행 전</td>
+                        <td>{w.trackingNum}</td>
+                        <td>{w.items[0].id}</td>
+                        <td className="font-normal">
+                          {w.done === 1 ? "완료" : "진행중"}
+                        </td>
                       </tr>
                     ))}
                 </tbody>

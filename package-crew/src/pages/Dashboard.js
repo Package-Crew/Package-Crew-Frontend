@@ -226,8 +226,8 @@ const Dashboard = () => {
               <div className="font-bold absolute top-28 left-36  flex justify-center text-6xl text-[#37CDBE]">
                 {avg}%
               </div>
-              <div className="font-bold text-3xl absolute bottom-6 left-[124px] text-white">
-                100/1000
+              <div className="font-bold text-3xl absolute bottom-6 left-40 text-white">
+                {clear}/{total}
               </div>
             </div>
           </div>
