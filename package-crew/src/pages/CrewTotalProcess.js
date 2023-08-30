@@ -16,7 +16,7 @@ font-bold text-xl
 
 function CrewTotalProcess() {
     const navigate = useNavigate();
-    const [data, setData] = useState({
+    const [totalData, setTotalData] = useState({
         workName: "블랙 프라이데이 컨버스 아울렛",
         startDate: "2023-08-29",
         endDate: "2023-09-01",
@@ -61,7 +61,7 @@ function CrewTotalProcess() {
                 `${process.env.REACT_APP_BASE_URL}/dangdol/process/all?workerId=6`
             )
             .then((res) => {
-                setData(res.data);
+                setTotalData(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -122,10 +122,10 @@ function CrewTotalProcess() {
             <div className="flex flex-col w-full">
                 <div className="h-1/6">
                     <div className=" text-3xl font-extrabold mr-auto pl-24 mt-10">
-                        {data.workName}
+                        {totalData.workName}
                     </div>
                     <div className=" text-lg text-gray-400 mr-auto pl-24 mt-3">
-                        {data.startDate} ~ {data.endDate}
+                        {totalData.startDate} ~ {totalData.endDate}
                     </div>
                 </div>
                 <div className=" px-24 h-5/6 ">
@@ -135,7 +135,7 @@ function CrewTotalProcess() {
                             <ItemBox className="bg-mainColor">
                                 <div className="text-white flex flex-col">
                                     <span className="font-bold text-6xl">
-                                        {data.total}
+                                        {totalData.total}
                                     </span>
                                     <span>전체 주문 개수</span>
                                 </div>
@@ -160,7 +160,7 @@ function CrewTotalProcess() {
                             <ItemBox className="bg-[#7B61FF]">
                                 <div className="text-white flex flex-col">
                                     <span className="font-bold text-6xl">
-                                        {data.clear}
+                                        {totalData.clear}
                                     </span>
                                     <span>작업 완료된 주문 개수</span>
                                 </div>
@@ -185,7 +185,7 @@ function CrewTotalProcess() {
                             <ItemBox className="bg-[#FF5724]">
                                 <div className="text-white flex flex-col">
                                     <span className="font-bold text-6xl">
-                                        {data.limit}
+                                        {totalData.limit}
                                     </span>
                                     <span>일정 마무리까지 남은 시간</span>
                                 </div>
@@ -219,12 +219,12 @@ function CrewTotalProcess() {
                                         data={[
                                             {
                                                 title: "One",
-                                                value: 100,
+                                                value: totalData.avg,
                                                 color: "#37CDBE",
                                             },
                                             {
                                                 title: "Two",
-                                                value: 900,
+                                                value: 100 - totalData.avg,
                                                 color: "white",
                                             },
                                         ]}
@@ -233,10 +233,10 @@ function CrewTotalProcess() {
                                         animate
                                     />
                                     <div className="font-bold absolute top-32 left-32 text-6xl text-[#37CDBE]">
-                                        {data.avg}%
+                                        {totalData.avg}%
                                     </div>
                                     <div className="font-bold text-3xl absolute bottom-6 left-[140px] text-white">
-                                        {data.clear}/{data.total}
+                                        {totalData.clear}/{totalData.total}
                                     </div>
                                 </div>
                             </div>
@@ -264,22 +264,22 @@ function CrewTotalProcess() {
                                         animate
                                     />
                                     <div className="font-bold absolute top-24 left-20 text-6xl text-[#B1A582]">
-                                        3%
+                                        {totalData.avg}%
                                     </div>
                                     <div className="font-bold text-3xl absolute bottom-6 left-[70px] text-white">
-                                        30/1000
+                                        {totalData.my}/{totalData.total}
                                     </div>
                                 </div>
                                 <div className="pr-24">
                                     <div className="font-bold absolute top-12 left-64 text-6xl text-[#FFFFFF]">
-                                        33%
+                                        {totalData.myPercent}%
                                     </div>
                                     <div className="font-bold absolute top-28 left-64 text-base text-[#FFFFFF]">
                                         현재 진행된 작업 중 <br />내 작업이
                                         차지하는 비율
                                     </div>
                                     <div className="font-bold absolute top-40 left-64 text-6xl text-[#FFFFFF]">
-                                        333
+                                        {totalData.myTotal}
                                     </div>
                                     <div className="font-bold absolute top-56 left-64 text-base text-[#FFFFFF]">
                                         현재 비율만큼 작업을 진행한다면 <br />
