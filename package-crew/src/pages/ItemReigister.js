@@ -1,9 +1,10 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import Header from "../components/header";
 import { cls } from "../libs/utils";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Circle = tw.div`
     h-3 w-3 bg-[#D9D9D9] rounded-full 
@@ -15,9 +16,27 @@ const ItemReigister = () => {
   const [previewImg, setPreviewImg] = useState();
   const [isClickNewItem, setIsClickNewItem] = useState(false);
   const { register, handleSubmit, reset } = useForm();
+  const [items, setItems] = useState([]);
 
   const onValid = (data) => {
-    console.log(data);
+    const formData = new FormData();
+
+    formData.append("image", file);
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/dangdol/item/1/${data.itemName}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          data: formData,
+          transformRequest: (data, headers) => {
+            return data;
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const insertImg = (e) => {
@@ -30,6 +49,16 @@ const ItemReigister = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/dangdol/item/all/1`)
+      .then((res) => {
+        console.log(res);
+        setItems(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="text-base pb-10 h-screen w-full mx-auto lg:w-[1024px]">
@@ -73,50 +102,49 @@ const ItemReigister = () => {
           </div>
         </div>
         <div className="grid grid-cols-6 gap-4">
-          {Array(24)
-            .fill(0)
-            .slice(12 * index, 12 * index + 12)
-            .map((n, i) => (
-              <div className="space-y-2">
-                <div className="h-40 w-40 rounded-xl bg-gray-200" />
-                <div className="flex font-bold">
-                  <div>
-                    <span>파란색 무지티</span>
-                    <span className="text-[#9E9E9E]">545665655</span>
-                  </div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                    />
-                  </svg>
+          {items.map((item, i) => (
+            <div className="space-y-2" key={i}>
+              <img src={item.imageUrl} className="h-40 w-40 rounded-xl" />
+              <div className="flex font-bold justify-between">
+                <div className="flex flex-col">
+                  <span>{item.itemName}</span>
+                  <span className="text-[#9E9E9E]">{item.id}</span>
                 </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
+                </svg>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
         <div>
           <div className="space-x-2 flex justify-center py-3">
-            {[0, 1].map((i) => (
-              <span
-                onClick={() => {
-                  setIndex(i);
-                }}
-                className={cls(
-                  i === index ? "text-mainColor" : "text-[#D9D9D9]",
-                  "font-bold cursor-pointer"
-                )}
-              >
-                {i + 1}
-              </span>
-            ))}
+            {Array(parseInt(items.length / 24) + 1)
+              .fill(0)
+              .map((n, i) => (
+                <span
+                  onClick={() => {
+                    setIndex(i);
+                  }}
+                  className={cls(
+                    i === index ? "text-mainColor" : "text-[#D9D9D9]",
+                    "font-bold cursor-pointer"
+                  )}
+                >
+                  {i + 1}
+                </span>
+              ))}
           </div>
         </div>
       </div>
@@ -173,14 +201,14 @@ const ItemReigister = () => {
                   </span>
                 </div>
                 <label for="itemImg">
-                  <div className="flex justify-center items-center bg-gray-400 text-gray-600 p-10 rounded-md">
+                  <div className="flex justify-center items-center bg-gray-400 text-gray-600 rounded-md">
                     {previewImg !== undefined ? (
                       <img
                         src={previewImg}
-                        className="object-cover w-full h-full"
+                        className="object-cover w-40 h-40 rounded-md"
                       />
                     ) : (
-                      <span className="">
+                      <span className="p-10">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -206,7 +234,7 @@ const ItemReigister = () => {
                 </label>
                 <input
                   type="file"
-                  id="img"
+                  id="itemImg"
                   {...register("img")}
                   className="hidden"
                   onChange={(e) => insertImg(e)}

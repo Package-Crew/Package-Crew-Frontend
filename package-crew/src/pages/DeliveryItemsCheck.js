@@ -1,15 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import { cls } from "../libs/utils";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { workIdState } from "../atom/exampleState";
 
 const DeliveryItemsCheck = () => {
   const [index, setIndex] = useState(0);
   const [isClickWork, setIsClickWork] = useState(false);
   const [isClickId, setIsClickId] = useState();
+
+  const [workId, setWorkId] = useRecoilState(workIdState);
+
+  const [deliveryList, setDeliveryList] = useState([
+    {
+      trackingNum: 5,
+      done: 1, // 1은 완료된 작
+      workerId: 8,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 6,
+      done: 0, //0은 아직 안된거
+      workerId: 0, // 배정이 안됐을경우 0으로 전송
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+  ]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/dangdol/delivery/${workId}`)
+      .then((res) => {
+        console.log(res);
+        setDeliveryList(res.data.deliveryList);
+      });
+  }, []);
   return (
     <div className="pt-10">
-      <div className="overflow-x-auto text-center">
-        <table className="table h-[572px]">
+      <div className="overflow-x-auto text-center h-[572px]">
+        <table className="table ">
           <thead className="text-center text-gray-400">
             <tr className="bg-base-200 text-base">
               <th>송장 번호</th>
@@ -19,24 +56,30 @@ const DeliveryItemsCheck = () => {
             </tr>
           </thead>
           <tbody className="text-center text-black text-base">
-            {Array(20)
-              .fill(0)
-              .slice(10 * index, 10 * index + 10)
-              .map((n, i) => (
-                <tr
-                  key={i}
-                  className="hover:bg-gray-300 transition-all cursor-pointer"
-                  onClick={() => {
-                    setIsClickWork(true);
-                    setIsClickId(i);
-                  }}
-                >
-                  <td>344156485874</td>
-                  <td>344156485874</td>
-                  <td>1</td>
-                  <td className="font-normal">진행 전{i}</td>
-                </tr>
-              ))}
+            {deliveryList.slice(10 * index, 10 * index + 10).map((d, i) => (
+              <tr
+                key={i}
+                className="hover:bg-gray-300 transition-all cursor-pointer"
+                onClick={() => {
+                  setIsClickWork(true);
+                  setIsClickId(i);
+                }}
+              >
+                <td>{d.trackingNum}</td>
+                <td>
+                  {d.items[0].id}
+                  {d.items.length === 1 ? "" : `외 ${d.items.length - 1}개`}
+                </td>
+                <td>{d.workerId}</td>
+                <td className="font-normal">
+                  {d.done === 1 ? (
+                    <span className="text-mainColor">완료</span>
+                  ) : (
+                    "진행 전"
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
