@@ -119,7 +119,7 @@ const CrewManagement = () => {
               }}
             >
               <td>{w.id}</td>
-              <td>{`배포주소/${w.id}`}</td>
+              <td>{`https://package-crew-frontend.vercel.app/crewWork/${w.id}`}</td>
               <td>{w.memo}</td>
               <td>{w.clear}</td>
               <td className="text-mainColor hover:underline">확인하기</td>

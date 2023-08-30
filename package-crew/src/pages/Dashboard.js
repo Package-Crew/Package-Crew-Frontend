@@ -91,6 +91,7 @@ const Dashboard = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/dangdol/dashboard/${workId}`)
       .then((res) => {
         console.log(res);
+        setDeliveryList(res.data.deliveryList);
         setTotal(res.data.total);
         setClear(res.data.clear);
         setLimit(res.data.limit);
@@ -222,7 +223,7 @@ const Dashboard = () => {
                 startAngle={270}
                 animate
               />
-              <div className="font-bold absolute top-32 left-32 text-6xl text-[#37CDBE]">
+              <div className="font-bold absolute top-28 left-36  flex justify-center text-6xl text-[#37CDBE]">
                 {avg}%
               </div>
               <div className="font-bold text-3xl absolute bottom-6 left-[124px] text-white">
