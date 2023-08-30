@@ -9,25 +9,17 @@ function CrewProcess() {
     const [workName, setWorkName] = useState("블랙 프라이데이 컨버스 아울렛");
     const [startDate, setStartDate] = useState("2023-08-29");
     const [endDate, setEndDate] = useState("2023-09-01");
-    const [deliveryResponseDtos, setDeliveryResponseDtos] =
-        useState(exampleData);
+    const [deliveryList, setDeliveryList] = useState(exampleData);
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = deliveryResponseDtos.slice(
-        indexOfFirstItem,
-        indexOfLastItem
-    );
-
+    const currentItems = deliveryList.slice(indexOfFirstItem, indexOfLastItem);
     const pageNumbers = [];
-    for (
-        let i = 1;
-        i <= Math.ceil(deliveryResponseDtos.length / itemsPerPage);
-        i++
-    ) {
+
+    for (let i = 1; i <= Math.ceil(deliveryList.length / itemsPerPage); i++) {
         pageNumbers.push(i);
     }
 
@@ -51,19 +43,19 @@ function CrewProcess() {
     };
 
     // 페이지가 로드되면 데이터 불러오기
-    // useEffect(() => {
-    //     axios
-    //         .get(`URL/dangdol/qrscan?trackingNum=1`)
-    //         .then((res) => {
-    //             setWorkName(res.data.workName);
-    //             setStartDate(res.data.startDate);
-    //             setEndDate(res.data.endDate);
-    //             setDeliveryResponseDtos(res.data.deliveryResponseDtos);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_BASE_URL}/dangdol/process?workerId=6`)
+            .then((res) => {
+                setWorkName(res.data.workName);
+                setStartDate(res.data.startDate);
+                setEndDate(res.data.endDate);
+                setDeliveryList(res.data.deliveryList);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     useEffect(() => {
         console.log("currentItems", currentItems);
@@ -147,21 +139,30 @@ function CrewProcess() {
                             <tbody>
                                 {currentItems.map((item, index) => (
                                     <tr key={index}>
+                                        {console.log(item.items)}
                                         <th>{item.trackingNum}</th>
                                         <td>
-                                            {item.itemList[0].id}
-                                            {item.itemList.length > 1 ? (
+                                            {item.items &&
+                                            item.items.length > 0 ? (
                                                 <>
-                                                    {" "}
-                                                    외{" "}
-                                                    {item.itemList.length -
-                                                        1}{" "}
-                                                    개
+                                                    {item.items[0].id}
+                                                    {item.items.length > 1 ? (
+                                                        <>
+                                                            {" "}
+                                                            외{" "}
+                                                            {item.items.length -
+                                                                1}{" "}
+                                                            개
+                                                        </>
+                                                    ) : (
+                                                        ""
+                                                    )}
                                                 </>
                                             ) : (
                                                 ""
                                             )}
                                         </td>
+
                                         <td>{item.workerId}</td>
                                         <td className="text-mainColor">
                                             {item.done === 1

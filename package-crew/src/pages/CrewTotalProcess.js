@@ -55,16 +55,18 @@ function CrewTotalProcess() {
     };
 
     // 페이지가 로드되면 데이터 불러오기
-    // useEffect(() => {
-    //     axios
-    //         .get(`URL/dangdol/process/all/workerId=1`)
-    //         .then((res) => {
-    //             setData(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_BASE_URL}/dangdol/process/all?workerId=6`
+            )
+            .then((res) => {
+                setData(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     return (
         <div className="flex h-screen">
