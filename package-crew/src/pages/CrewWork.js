@@ -214,7 +214,7 @@ function CrewWork() {
                         </button>
                         <button
                             className={`complete-btn btn btn-wide border-none ${
-                                checkedItems.every((isChecked) => isChecked)
+                                checkedItems.some((isChecked) => isChecked) // 하나 이상 체크되었을 때 버튼 활성화
                                     ? "bg-mainColor text-white"
                                     : "bg-gray-300 text-white btn-disabled"
                             }`}
