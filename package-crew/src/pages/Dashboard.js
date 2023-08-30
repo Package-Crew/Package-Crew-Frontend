@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import tw from "tailwind-styled-components";
 import { PieChart } from "react-minimal-pie-chart";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { workIdState } from "../atom/exampleState";
 
 const ItemBox = tw.div`
  rounded-md  p-6 flex items-center justify-between transition-all cursor-pointer dropdown 
@@ -12,6 +15,90 @@ font-bold text-xl
 `;
 
 const Dashboard = () => {
+  const [workId, setWordId] = useRecoilState(workIdState);
+  const [total, setTotal] = useState();
+  const [clear, setClear] = useState();
+  const [limit, setLimit] = useState();
+  const [avg, setAvg] = useState();
+  const [deliveryList, setDeliveryList] = useState([
+    {
+      trackingNum: 8,
+      done: 1, // 1이 완료된 상태임, 0은 완료안됨
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 7,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 6,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 5,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 4,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 3,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+    {
+      trackingNum: 2,
+      done: 1,
+      items: [
+        {
+          id: 3,
+        },
+      ],
+    },
+  ]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/dangdol/dashboard/${workId}`)
+      .then((res) => {
+        console.log(res);
+        setTotal(res.data.total);
+        setClear(res.data.clear);
+        setLimit(res.data.limit);
+        setAvg(res.data.avg);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="  ">
       <div className="pt-5 pb-10 space-y-4">
@@ -19,7 +106,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-3 gap-7">
           <ItemBox className="bg-mainColor">
             <div className="text-white flex flex-col">
-              <span className="font-bold text-6xl">1000</span>
+              <span className="font-bold text-6xl">{total}</span>
               <span>전체 주문 개수</span>
             </div>
             <div className="text-white  relative">
@@ -42,7 +129,7 @@ const Dashboard = () => {
           </ItemBox>
           <ItemBox className="bg-[#7B61FF]">
             <div className="text-white flex flex-col">
-              <span className="font-bold text-6xl">100</span>
+              <span className="font-bold text-6xl">{clear}</span>
               <span>작업 완료된 주문 개수</span>
             </div>
             <div className="text-white  relative">
@@ -65,7 +152,7 @@ const Dashboard = () => {
           </ItemBox>
           <ItemBox className="bg-[#FF5724]">
             <div className="text-white flex flex-col">
-              <span className="font-bold text-6xl">26</span>
+              <span className="font-bold text-6xl">{limit}</span>
               <span>일정 마무리까지 남은 시간</span>
             </div>
             <div className="text-white  relative">
@@ -102,15 +189,22 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody className="text-center text-black  ">
-                {Array(7)
-                  .fill(0)
-                  .map((n, i) => (
-                    <tr>
-                      <td>344156485874</td>
-                      <td>344156485874</td>
-                      <td className="font-normal">진행 전</td>
-                    </tr>
-                  ))}
+                {deliveryList.map((d, i) => (
+                  <tr>
+                    <td>{d.trackingNum}</td>
+                    <td>
+                      {d.items[0].id}
+                      {d.items.length === 1 ? "" : `외 ${d.items.length - 1}개`}
+                    </td>
+                    <td className="font-normal">
+                      {d.done === 1 ? (
+                        <span className="text-mainColor">완료</span>
+                      ) : (
+                        "진행 전"
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -121,15 +215,15 @@ const Dashboard = () => {
             <div className="bg-white rounded-full w-64 h-64 p-4">
               <PieChart
                 data={[
-                  { title: "One", value: 100, color: "#37CDBE" },
-                  { title: "Two", value: 900, color: "white" },
+                  { title: "One", value: avg, color: "#37CDBE" },
+                  { title: "Two", value: 100 - avg, color: "white" },
                 ]}
                 lineWidth={20}
                 startAngle={270}
                 animate
               />
               <div className="font-bold absolute top-32 left-32 text-6xl text-[#37CDBE]">
-                10%
+                {avg}%
               </div>
               <div className="font-bold text-3xl absolute bottom-6 left-[124px] text-white">
                 100/1000

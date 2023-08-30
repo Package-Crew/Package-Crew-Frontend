@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cls } from "../libs/utils";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { workIdState } from "../atom/exampleState";
 
 const CrewManagement = () => {
   const [index, setIndex] = useState(0);
@@ -8,11 +11,66 @@ const CrewManagement = () => {
   const [crewIndex, setCrewIndex] = useState(0);
   const [isClickNewCrew, setIsClickNewCrew] = useState(false);
 
+  const [workId, setWorkId] = useRecoilState(workIdState);
+
+  const [workerId, setWorkerId] = useState();
+  const [workers, setWorkers] = useState([
+    {
+      id: 8,
+      memo: "김철수",
+      clear: 3, //완료된 개수
+    },
+    {
+      id: 11,
+      memo: "김철수2",
+      clear: 1,
+    },
+  ]);
+
   const { register, handleSubmit, reset } = useForm();
 
   const onValid = (data) => {
     console.log(data);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/dangdol/worker/${workId}`, {
+        memo: data.crewMemo,
+      })
+      .then((res) => {
+        console.log(res);
+        const newCrew = {
+          id: res.data.workerId,
+          memo: data.crewMemo,
+          clear: 0,
+        };
+
+        setWorkers([...workers, newCrew]);
+        setIsClickNewCrew(false);
+        reset();
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/dangdol/worker/all/${workId}`)
+      .then((res) => {
+        console.log(res);
+        setWorkers(res.data.allWorkerList);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  useEffect(() => {
+    if (isClickCrew) {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/dangdol/delivery/all/${workerId}`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isClickCrew]);
   return (
     <div className="pt-4">
       <div className="flex justify-end pb-3">
@@ -51,24 +109,22 @@ const CrewManagement = () => {
           </tr>
         </thead>
         <tbody className="text-center text-black text-base">
-          {Array(1)
-            .fill(0)
-            .slice(10 * index, 10 * index + 10)
-            .map((n, i) => (
-              <tr
-                key={i}
-                className="hover:bg-gray-300 transition-all cursor-pointer "
-                onClick={() => {
-                  setIsClickCrew(true);
-                }}
-              >
-                <td>1</td>
-                <td>ㅏㅇ러ㅣㅁㄴㅇㄹ/ㅇ러ㅣㄴㅇㄹ</td>
-                <td>진윤겸</td>
-                <td>15</td>
-                <td className="text-mainColor hover:underline">확인하기</td>
-              </tr>
-            ))}
+          {workers.slice(10 * index, 10 * index + 10).map((w, i) => (
+            <tr
+              key={i}
+              className="hover:bg-gray-300 transition-all cursor-pointer "
+              onClick={() => {
+                setIsClickCrew(true);
+                setWorkerId(w.id);
+              }}
+            >
+              <td>{w.id}</td>
+              <td>{`배포주소/${w.id}`}</td>
+              <td>{w.memo}</td>
+              <td>{w.clear}</td>
+              <td className="text-mainColor hover:underline">확인하기</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       {isClickCrew ? (
