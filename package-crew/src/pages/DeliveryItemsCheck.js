@@ -77,7 +77,8 @@ const DeliveryItemsCheck = () => {
                 key={i}
                 className="hover:bg-gray-300 transition-all cursor-pointer"
                 onClick={() => {
-                  setIsClickWork(true);
+                  if (d.done === 1) setIsClickWork(true);
+
                   setIsClickId(i);
                   setTrackingNum(d.trackingNum);
                 }}
@@ -142,7 +143,7 @@ const DeliveryItemsCheck = () => {
                 </svg>
               </div>
             </div>
-            <video src={videoUrl} className="h-80 w-full " />
+            <video src={videoUrl} className="h-80 w-full " controls />
           </div>
         </div>
       ) : null}
